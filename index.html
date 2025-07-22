@@ -100,43 +100,60 @@
             border-bottom: 1px solid #ff8c00;
             padding-bottom: 5px;
         }
-        .user-section {
-            margin-bottom: 20px;
-            padding: 15px;
+        .add-quest-form {
             background-color: #2a2a2a;
+            padding: 20px;
             border-radius: 5px;
+            margin-bottom: 30px;
         }
-        .user-input {
-            padding: 8px;
-            width: 200px;
-            margin-right: 10px;
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px;
             background-color: #333;
             color: white;
             border: 1px solid #ff8c00;
             border-radius: 4px;
+            margin-bottom: 10px;
         }
-        .user-btn {
-            padding: 8px 15px;
+        .form-btn {
             background-color: #ff8c00;
             color: white;
             border: none;
+            padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
         }
-        .user-list {
+        .user-quests {
+            margin-top: 30px;
+        }
+        .quest-image {
+            max-width: 200px;
+            max-height: 200px;
             margin-top: 10px;
+            display: block;
+        }
+        .user-quest {
+            position: relative;
+        }
+        .delete-quest {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>S.T.A.L.K.E.R. Квест-трекер</h1>
-    
-    <div class="user-section">
-        <input type="text" class="user-input" id="username" placeholder="Ваше имя сталкера">
-        <button class="user-btn" id="save-user">Сохранить мой список</button>
-        <button class="user-btn" id="load-user">Загрузить список</button>
-        <div class="user-list" id="user-list"></div>
-    </div>
     
     <div class="stats">
         <div>Выполнено: <span id="completed-count">0</span> из <span id="total-count">0</span> квестов</div>
@@ -145,200 +162,196 @@
     
     <input type="text" class="search" placeholder="Поиск квестов..." id="quest-search">
 
+    <div class="add-quest-form">
+        <h2 class="section-title">Добавить своё задание</h2>
+        <div class="form-group">
+            <input type="text" class="form-input" id="user-name" placeholder="Ваш никнейм">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-input" id="quest-title" placeholder="Название задания">
+        </div>
+        <div class="form-group">
+            <textarea class="form-input" id="quest-description" placeholder="Описание задания"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="file" id="quest-image" accept="image/*">
+        </div>
+        <button class="form-btn" id="add-quest-btn">Добавить задание</button>
+    </div>
+
     <h2 class="section-title daily-title">Ежедневные квесты</h2>
     <button class="reset-daily" id="reset-daily">Сбросить ежедневные</button>
     
     <div class="quest-list daily-quests" id="daily-quests">
-        <!-- Ежедневные квесты -->
+        <!-- Ежедневные квесты будут здесь -->
     </div>
     
     <h2 class="section-title">Основные квесты</h2>
     
     <div class="quest-list" id="main-quests">
-        <!-- Основные квесты -->
+        <!-- Основные квесты будут здесь -->
     </div>
 
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyD8vVvWqj5X9X5Q5X5Q5X5Q5X5Q5X5Q5X5",
-            authDomain: "stalker-quest-tracker.firebaseapp.com",
-            databaseURL: "https://stalker-quest-tracker.firebaseio.com",
-            projectId: "stalker-quest-tracker",
-            storageBucket: "stalker-quest-tracker.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:5X5Q5X5Q5X5Q5X5Q5X5Q5"
-        };
-        
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM elements
-            const checkboxes = document.querySelectorAll('.quest-checkbox');
-            const dailyCheckboxes = document.querySelectorAll('.quest-checkbox.daily');
-            const completedCount = document.getElementById('completed-count');
-            const totalCount = document.getElementById('total-count');
-            const progressBar = document.getElementById('quest-progress');
-            const resetDailyBtn = document.getElementById('reset-daily');
-            const saveUserBtn = document.getElementById('save-user');
-            const loadUserBtn = document.getElementById('load-user');
-            const usernameInput = document.getElementById('username');
-            const userListDiv = document.getElementById('user-list');
-            
-            // Initialize quests
-            initializeQuests();
-            totalCount.textContent = document.querySelectorAll('.quest-checkbox').length;
-            
-            // Load users list
-            loadUsersList();
-            
-            // Event listeners
-            saveUserBtn.addEventListener('click', saveUserProgress);
-            loadUserBtn.addEventListener('click', loadUserProgress);
-            resetDailyBtn.addEventListener('click', resetDailyQuests);
-            
-            // Setup search
-            setupSearch();
-            
-            function initializeQuests() {
-                // Здесь должна быть инициализация всех квестов как в предыдущих примерах
-                // Для краткости опущена, но должна включать все квесты с правильными ID
-            }
-            
-            function loadUsersList() {
-                database.ref('users').once('value').then(snapshot => {
-                    const users = snapshot.val();
-                    userListDiv.innerHTML = '<h3>Сохранённые списки:</h3>';
-                    
-                    if (users) {
-                        for (const [userId, userData] of Object.entries(users)) {
-                            const userDiv = document.createElement('div');
-                            userDiv.innerHTML = `
-                                <span>${userData.name}</span>
-                                <button onclick="loadUser('${userId}')">Загрузить</button>
-                                <button onclick="deleteUser('${userId}')">Удалить</button>
-                            `;
-                            userListDiv.appendChild(userDiv);
-                        }
-                    }
-                });
-            }
-            
-            function saveUserProgress() {
-                const username = usernameInput.value.trim();
-                if (!username) {
-                    alert('Введите имя сталкера');
-                    return;
-                }
-                
-                const completedQuests = [];
-                document.querySelectorAll('.quest-checkbox:checked').forEach(checkbox => {
-                    completedQuests.push(checkbox.id);
-                });
-                
-                const newUserRef = database.ref('users').push();
-                newUserRef.set({
-                    name: username,
-                    completedQuests: completedQuests,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                }).then(() => {
-                    alert('Ваш прогресс сохранён!');
-                    loadUsersList();
-                });
-            }
-            
-            function loadUserProgress() {
-                const username = usernameInput.value.trim();
-                if (!username) {
-                    alert('Введите имя сталкера');
-                    return;
-                }
-                
-                database.ref('users').orderByChild('name').equalTo(username).once('value').then(snapshot => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        const userId = Object.keys(userData)[0];
-                        loadUser(userId);
-                    } else {
-                        alert('Список не найден');
-                    }
-                });
-            }
-            
-            window.loadUser = function(userId) {
-                database.ref('users/' + userId).once('value').then(snapshot => {
-                    const userData = snapshot.val();
-                    usernameInput.value = userData.name;
-                    
-                    // Reset all checkboxes
-                    document.querySelectorAll('.quest-checkbox').forEach(checkbox => {
-                        checkbox.checked = false;
-                        checkbox.parentElement.classList.remove('completed');
-                    });
-                    
-                    // Mark completed quests
-                    userData.completedQuests.forEach(questId => {
-                        const checkbox = document.getElementById(questId);
-                        if (checkbox) {
-                            checkbox.checked = true;
-                            checkbox.parentElement.classList.add('completed');
-                        }
-                    });
-                    
-                    updateStats();
-                    alert(`Список ${userData.name} загружен`);
-                });
-            };
-            
-            window.deleteUser = function(userId) {
-                if (confirm('Удалить этот список?')) {
-                    database.ref('users/' + userId).remove().then(() => {
-                        loadUsersList();
-                    });
-                }
-            };
-            
-            function resetDailyQuests() {
-                dailyCheckboxes.forEach(checkbox => {
-                    checkbox.checked = false;
-                    checkbox.parentElement.classList.remove('completed');
-                });
-                updateStats();
-            }
-            
-            function updateStats() {
-                const completed = document.querySelectorAll('.quest-checkbox:checked').length;
-                completedCount.textContent = completed;
-                progressBar.value = (completed / document.querySelectorAll('.quest-checkbox').length) * 100;
-            }
-            
-            function setupSearch() {
-                const searchInput = document.getElementById('quest-search');
-                searchInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    const quests = document.querySelectorAll('.quest');
-                    
-                    quests.forEach(quest => {
-                        const questText = quest.textContent.toLowerCase();
-                        quest.style.display = questText.includes(searchTerm) ? 'flex' : 'none';
-                    });
-                });
-            }
-            
-            // Initialize checkbox events
-            document.querySelectorAll('.quest-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    this.parentElement.classList.toggle('completed', this.checked);
-                    updateStats();
-                });
-            });
-        });
-    </script>
-    
-    <!-- Подключаем Firebase -->
+    <div class="user-quests">
+        <h2 class="section-title">Задания от сталкеров</h2>
+        <div class="quest-list" id="user-quests-list">
+            <!-- Пользовательские квесты будут здесь -->
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-storage.js"></script>
+    
+    <script>
+        // Ваша конфигурация Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyYOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const storage = firebase.storage();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация квестов
+            initializeQuests();
+            
+            // Элементы интерфейса
+            const addQuestBtn = document.getElementById('add-quest-btn');
+            const resetDailyBtn = document.getElementById('reset-daily');
+            const searchInput = document.getElementById('quest-search');
+            
+            // Обработчики событий
+            addQuestBtn.addEventListener('click', addUserQuest);
+            resetDailyBtn.addEventListener('click', resetDailyQuests);
+            searchInput.addEventListener('input', searchQuests);
+            
+            // Загрузка пользовательских квестов
+            loadUserQuests();
+            
+            // Инициализация статистики
+            updateStats();
+        });
+        
+        function initializeQuests() {
+            // Здесь должна быть инициализация стандартных квестов
+            // Для краткости опущена, но должна включать все квесты из предыдущих примеров
+        }
+        
+        function addUserQuest() {
+            const userName = document.getElementById('user-name').value.trim();
+            const questTitle = document.getElementById('quest-title').value.trim();
+            const questDescription = document.getElementById('quest-description').value.trim();
+            const imageFile = document.getElementById('quest-image').files[0];
+            
+            if (!userName || !questTitle) {
+                alert('Заполните никнейм и название задания');
+                return;
+            }
+            
+            const newQuestRef = database.ref('userQuests').push();
+            const questId = newQuestRef.key;
+            
+            if (imageFile) {
+                const storageRef = storage.ref('quest_images/' + questId);
+                storageRef.put(imageFile).then(snapshot => {
+                    return snapshot.ref.getDownloadURL();
+                }).then(imageUrl => {
+                    saveQuestToDatabase(questId, userName, questTitle, questDescription, imageUrl);
+                });
+            } else {
+                saveQuestToDatabase(questId, userName, questTitle, questDescription, null);
+            }
+        }
+        
+        function saveQuestToDatabase(questId, userName, title, description, imageUrl) {
+            database.ref('userQuests/' + questId).set({
+                userName: userName,
+                title: title,
+                description: description,
+                imageUrl: imageUrl,
+                completedBy: {},
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                alert('Задание добавлено!');
+                document.getElementById('quest-title').value = '';
+                document.getElementById('quest-description').value = '';
+                document.getElementById('quest-image').value = '';
+            });
+        }
+        
+        function loadUserQuests() {
+            database.ref('userQuests').on('value', snapshot => {
+                const userQuests = snapshot.val();
+                const userQuestsList = document.getElementById('user-quests-list');
+                userQuestsList.innerHTML = '';
+                
+                if (userQuests) {
+                    Object.entries(userQuests).forEach(([questId, questData]) => {
+                        const questElement = document.createElement('div');
+                        questElement.className = 'quest user-quest';
+                        questElement.innerHTML = `
+                            <button class="delete-quest" onclick="deleteUserQuest('${questId}')">×</button>
+                            <input type="checkbox" class="quest-checkbox user-quest-checkbox" id="user-${questId}" 
+                                   ${questData.completedBy ? 'checked' : ''}>
+                            <div class="quest-info">
+                                <span class="quest-name">${questData.title} (от ${questData.userName})</span>
+                                <div class="quest-details">
+                                    <span class="quest-description">${questData.description}</span>
+                                    ${questData.imageUrl ? `<img src="${questData.imageUrl}" class="quest-image">` : ''}
+                                </div>
+                            </div>
+                        `;
+                        
+                        const checkbox = questElement.querySelector('.quest-checkbox');
+                        checkbox.addEventListener('change', function() {
+                            toggleQuestCompletion(questId, this.checked);
+                        });
+                        
+                        userQuestsList.appendChild(questElement);
+                    });
+                }
+            });
+        }
+        
+        function toggleQuestCompletion(questId, completed) {
+            const userId = 'anonymous'; // Здесь можно добавить систему авторизации
+            if (completed) {
+                database.ref(`userQuests/${questId}/completedBy/${userId}`).set(true);
+            } else {
+                database.ref(`userQuests/${questId}/completedBy/${userId}`).remove();
+            }
+        }
+        
+        window.deleteUserQuest = function(questId) {
+            if (confirm('Удалить это задание?')) {
+                database.ref('userQuests/' + questId).remove();
+            }
+        };
+        
+        function resetDailyQuests() {
+            // Логика сброса ежедневных квестов
+        }
+        
+        function searchQuests() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.quest').forEach(quest => {
+                const questText = quest.textContent.toLowerCase();
+                quest.style.display = questText.includes(searchTerm) ? 'flex' : 'none';
+            });
+        }
+        
+        function updateStats() {
+            // Логика обновления статистики
+        }
+    </script>
 </body>
 </html>
