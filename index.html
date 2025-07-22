@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.T.A.L.K.E.R. Квест-трекер</title>
+    <title>Q-Track by IT</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -100,60 +100,10 @@
             border-bottom: 1px solid #ff8c00;
             padding-bottom: 5px;
         }
-        .add-quest-form {
-            background-color: #2a2a2a;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            border: 1px solid #ff8c00;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        .form-btn {
-            background-color: #ff8c00;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .user-quests {
-            margin-top: 30px;
-        }
-        .quest-image {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
-            display: block;
-        }
-        .user-quest {
-            position: relative;
-        }
-        .delete-quest {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background-color: #ff4444;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <h1>S.T.A.L.K.E.R. Квест-трекер</h1>
+    <h1>Q-Track</h1>
     
     <div class="stats">
         <div>Выполнено: <span id="completed-count">0</span> из <span id="total-count">0</span> квестов</div>
@@ -162,196 +112,622 @@
     
     <input type="text" class="search" placeholder="Поиск квестов..." id="quest-search">
 
-    <div class="add-quest-form">
-        <h2 class="section-title">Добавить своё задание</h2>
-        <div class="form-group">
-            <input type="text" class="form-input" id="user-name" placeholder="Ваш никнейм">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-input" id="quest-title" placeholder="Название задания">
-        </div>
-        <div class="form-group">
-            <textarea class="form-input" id="quest-description" placeholder="Описание задания"></textarea>
-        </div>
-        <div class="form-group">
-            <input type="file" id="quest-image" accept="image/*">
-        </div>
-        <button class="form-btn" id="add-quest-btn">Добавить задание</button>
-    </div>
-
     <h2 class="section-title daily-title">Ежедневные квесты</h2>
     <button class="reset-daily" id="reset-daily">Сбросить ежедневные</button>
     
     <div class="quest-list daily-quests" id="daily-quests">
-        <!-- Ежедневные квесты будут здесь -->
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox daily" id="daily1">
+            <div class="quest-info">
+                <span class="quest-name">Корм для собак</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                    <div class="quest-notes">Откат квеста 12 ч.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox daily" id="daily2">
+            <div class="quest-info">
+                <span class="quest-name">Логово бабы Яги в х1</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                    <div class="quest-notes">Откат квеста 24 ч.</div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <h2 class="section-title">Основные квесты</h2>
     
-    <div class="quest-list" id="main-quests">
-        <!-- Основные квесты будут здесь -->
-    </div>
-
-    <div class="user-quests">
-        <h2 class="section-title">Задания от сталкеров</h2>
-        <div class="quest-list" id="user-quests-list">
-            <!-- Пользовательские квесты будут здесь -->
+    <div class="quest-list">
+        <h3 class="location-title">Деребас</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest1">
+            <div class="quest-info">
+                <span class="quest-name">Волк и слепые псы</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest2">
+            <div class="quest-info">
+                <span class="quest-name">Округу нужно знать</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest3">
+            <div class="quest-info">
+                <span class="quest-name">Округу нужно знать 2</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest4">
+            <div class="quest-info">
+                <span class="quest-name">Округу нужно знать 3</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest5">
+            <div class="quest-info">
+                <span class="quest-name">Инструмент уважающего себя новичка</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest6">
+            <div class="quest-info">
+                <span class="quest-name">Всякий хлам, главное не банки жестяные</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Сидор</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest7">
+            <div class="quest-info">
+                <span class="quest-name">Волк да Лис, старые друзья</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                    <div class="quest-notes">Отправляет к Лису</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest40">
+            <div class="quest-info">
+                <span class="quest-name">Под землю</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest41">
+            <div class="quest-info">
+                <span class="quest-name">Логово бабы Яги в х1</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                    <div class="quest-notes">Откат квеста 24 ч.</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">База ЧН</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest34">
+            <div class="quest-info">
+                <span class="quest-name">Найти проход на базу Чистого Неба</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Волк</span> - 
+                    <span class="quest-location">Деребас</span>
+                    <div class="quest-notes">Волк отправляет найти базу ЧН и поговорить с Новиковым (СДАЧА КВЕСТА НОВИКОВУ)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest27">
+            <div class="quest-info">
+                <span class="quest-name">Настройка дело тонкое</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Новиков</span> - 
+                    <span class="quest-location">База ЧН</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest28">
+            <div class="quest-info">
+                <span class="quest-name">Техническое совершенство</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Новиков</span> - 
+                    <span class="quest-location">База ЧН</span>
+                    <div class="quest-notes">Получить сканер и отнести Круглову (Бункер Сахара)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest35">
+            <div class="quest-info">
+                <span class="quest-name">Зачистка болот</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Новиков</span> - 
+                    <span class="quest-location">База ЧН</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest36">
+            <div class="quest-info">
+                <span class="quest-name">Местный Йети</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Новиков</span> - 
+                    <span class="quest-location">База ЧН</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest37">
+            <div class="quest-info">
+                <span class="quest-name">Большой улов</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Новиков</span> - 
+                    <span class="quest-location">База ЧН</span>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Ферма нейтралов</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest8">
+            <div class="quest-info">
+                <span class="quest-name">Волк да Лис, старые друзья</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Лис</span> - 
+                    <span class="quest-location">Ферма нейтралов</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest9">
+            <div class="quest-info">
+                <span class="quest-name">Лис мужик полезный, надо подружиться</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Лис</span> - 
+                    <span class="quest-location">Ферма нейтралов</span>
+                    <div class="quest-notes">Лис выдает посылку и отправляет к Волку</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest10">
+            <div class="quest-info">
+                <span class="quest-name">Шустрее надо двигаться, понял?</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Лис</span> - 
+                    <span class="quest-location">Ферма нейтралов</span>
+                    <div class="quest-notes">Получение посылки. Лис дает 3 упаковки гранат м67 и отправляет к Кабану на депо</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Депо</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest11">
+            <div class="quest-info">
+                <span class="quest-name">Проба товара</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Кабан</span> - 
+                    <span class="quest-location">Депо</span>
+                    <div class="quest-notes">Получение товара. Получить чемодан у Кабана и отнести Свободе (Арм склады)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest13">
+            <div class="quest-info">
+                <span class="quest-name">Заказ братвы</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Кабан</span> - 
+                    <span class="quest-location">Депо</span>
+                    <div class="quest-notes">Квест на самописец N2</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest14">
+            <div class="quest-info">
+                <span class="quest-name">Технарь с района</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Прозрачный</span> - 
+                    <span class="quest-location">Депо</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest15">
+            <div class="quest-info">
+                <span class="quest-name">На крючке</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Кабан</span> - 
+                    <span class="quest-location">Депо</span>
+                    <div class="quest-notes">Получение посылки. Протыкать квест получить посылку. Отнести Лукашу (Арм склад)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest42">
+            <div class="quest-info">
+                <span class="quest-name">Разведка</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Кабан</span> - 
+                    <span class="quest-location">Депо</span>
+                    <div class="quest-notes">Осмотреть Агропром</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Бар</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest31">
+            <div class="quest-info">
+                <span class="quest-name">Рожки для мороженого</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest32">
+            <div class="quest-info">
+                <span class="quest-name">Рожки для мороженого 2</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest33">
+            <div class="quest-info">
+                <span class="quest-name">Рожки для мороженого 3</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest38">
+            <div class="quest-info">
+                <span class="quest-name">Зачистка территории Бара</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                    <div class="quest-notes">Сдача Генерал Воронин (База долга на баре)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest39">
+            <div class="quest-info">
+                <span class="quest-name">Корм для собак</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Бармен</span> - 
+                    <span class="quest-location">Бар</span>
+                    <div class="quest-notes">Откат квеста 12 ч.</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Агропром</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest17">
+            <div class="quest-info">
+                <span class="quest-name">Пропавшие бойцы</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest18">
+            <div class="quest-info">
+                <span class="quest-name">Приключение на пять минут</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                    <div class="quest-notes">Получение флешки. Взять флешку у Майора Глухарева (Агропром) отнести Круглову(Бункер Сахара)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest19">
+            <div class="quest-info">
+                <span class="quest-name">Приключение на пять минут. Доставка флешки</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                    <div class="quest-notes">Отдать флешку Круглову (Бункер Сахара)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest22">
+            <div class="quest-info">
+                <span class="quest-name">Интересные факты. Доставка флешки</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                    <div class="quest-notes">Отдать флешку Майору Глухареву (Агропром)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest23">
+            <div class="quest-info">
+                <span class="quest-name">Печальная история</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest43">
+            <div class="quest-info">
+                <span class="quest-name">Упавшие птички</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Майор Глухарев</span> - 
+                    <span class="quest-location">Агропром</span>
+                    <div class="quest-notes">Квест на самописцы Кабан(депо),Лукаш(Арм склады)</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Бункер Сахара</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest20">
+            <div class="quest-info">
+                <span class="quest-name">Зачистка болот кровососов</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest21">
+            <div class="quest-info">
+                <span class="quest-name">Интересные факты</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                    <div class="quest-notes">Получение флешки. Взять флешку отнести Майору Глухареву (Агропром)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest24">
+            <div class="quest-info">
+                <span class="quest-name">Прототип блокатора</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest25">
+            <div class="quest-info">
+                <span class="quest-name">Испытатель</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest26">
+            <div class="quest-info">
+                <span class="quest-name">Сканер аномалий нового поколения</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                    <div class="quest-notes">Получение сканера. Получить сканер и отнести Новикову (База ЧН)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest29">
+            <div class="quest-info">
+                <span class="quest-name">Сканер аномалий нового поколения. Доставка сканера</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                    <div class="quest-notes">Отдать сканер Круглову (Бункер Сахара)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest30">
+            <div class="quest-info">
+                <span class="quest-name">Полная защита это ПСИ шлем</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Круглов</span> - 
+                    <span class="quest-location">Бункер Сахара</span>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="location-title">Арм склады</h3>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest12">
+            <div class="quest-info">
+                <span class="quest-name">Зачистка</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Лукаш</span> - 
+                    <span class="quest-location">Арм склады</span>
+                    <div class="quest-notes">Квест на самописец N1</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quest">
+            <input type="checkbox" class="quest-checkbox" id="quest16">
+            <div class="quest-info">
+                <span class="quest-name">На крючке. Доставка посылки</span>
+                <div class="quest-details">
+                    <span class="quest-giver">Лукаш</span> - 
+                    <span class="quest-location">Арм склад</span>
+                    <div class="quest-notes">Отдать посылку Лукашу (Арм склад)</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-storage.js"></script>
-    
     <script>
-        // Ваша конфигурация Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyYOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-            projectId: "YOUR_PROJECT",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const storage = firebase.storage();
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // Инициализация квестов
-            initializeQuests();
-            
-            // Элементы интерфейса
-            const addQuestBtn = document.getElementById('add-quest-btn');
+            const checkboxes = document.querySelectorAll('.quest-checkbox');
+            const dailyCheckboxes = document.querySelectorAll('.quest-checkbox.daily');
+            const completedCount = document.getElementById('completed-count');
+            const totalCount = document.getElementById('total-count');
+            const progressBar = document.getElementById('quest-progress');
             const resetDailyBtn = document.getElementById('reset-daily');
-            const searchInput = document.getElementById('quest-search');
             
-            // Обработчики событий
-            addQuestBtn.addEventListener('click', addUserQuest);
-            resetDailyBtn.addEventListener('click', resetDailyQuests);
-            searchInput.addEventListener('input', searchQuests);
+            totalCount.textContent = checkboxes.length;
             
-            // Загрузка пользовательских квестов
-            loadUserQuests();
-            
-            // Инициализация статистики
-            updateStats();
-        });
-        
-        function initializeQuests() {
-            // Здесь должна быть инициализация стандартных квестов
-            // Для краткости опущена, но должна включать все квесты из предыдущих примеров
-        }
-        
-        function addUserQuest() {
-            const userName = document.getElementById('user-name').value.trim();
-            const questTitle = document.getElementById('quest-title').value.trim();
-            const questDescription = document.getElementById('quest-description').value.trim();
-            const imageFile = document.getElementById('quest-image').files[0];
-            
-            if (!userName || !questTitle) {
-                alert('Заполните никнейм и название задания');
-                return;
-            }
-            
-            const newQuestRef = database.ref('userQuests').push();
-            const questId = newQuestRef.key;
-            
-            if (imageFile) {
-                const storageRef = storage.ref('quest_images/' + questId);
-                storageRef.put(imageFile).then(snapshot => {
-                    return snapshot.ref.getDownloadURL();
-                }).then(imageUrl => {
-                    saveQuestToDatabase(questId, userName, questTitle, questDescription, imageUrl);
-                });
-            } else {
-                saveQuestToDatabase(questId, userName, questTitle, questDescription, null);
-            }
-        }
-        
-        function saveQuestToDatabase(questId, userName, title, description, imageUrl) {
-            database.ref('userQuests/' + questId).set({
-                userName: userName,
-                title: title,
-                description: description,
-                imageUrl: imageUrl,
-                completedBy: {},
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            }).then(() => {
-                alert('Задание добавлено!');
-                document.getElementById('quest-title').value = '';
-                document.getElementById('quest-description').value = '';
-                document.getElementById('quest-image').value = '';
-            });
-        }
-        
-        function loadUserQuests() {
-            database.ref('userQuests').on('value', snapshot => {
-                const userQuests = snapshot.val();
-                const userQuestsList = document.getElementById('user-quests-list');
-                userQuestsList.innerHTML = '';
-                
-                if (userQuests) {
-                    Object.entries(userQuests).forEach(([questId, questData]) => {
-                        const questElement = document.createElement('div');
-                        questElement.className = 'quest user-quest';
-                        questElement.innerHTML = `
-                            <button class="delete-quest" onclick="deleteUserQuest('${questId}')">×</button>
-                            <input type="checkbox" class="quest-checkbox user-quest-checkbox" id="user-${questId}" 
-                                   ${questData.completedBy ? 'checked' : ''}>
-                            <div class="quest-info">
-                                <span class="quest-name">${questData.title} (от ${questData.userName})</span>
-                                <div class="quest-details">
-                                    <span class="quest-description">${questData.description}</span>
-                                    ${questData.imageUrl ? `<img src="${questData.imageUrl}" class="quest-image">` : ''}
-                                </div>
-                            </div>
-                        `;
-                        
-                        const checkbox = questElement.querySelector('.quest-checkbox');
-                        checkbox.addEventListener('change', function() {
-                            toggleQuestCompletion(questId, this.checked);
-                        });
-                        
-                        userQuestsList.appendChild(questElement);
+            function loadQuestStates() {
+                checkboxes.forEach(checkbox => {
+                    const questId = checkbox.id;
+                    const savedState = localStorage.getItem(questId);
+                    
+                    if (savedState === 'completed') {
+                        checkbox.checked = true;
+                        checkbox.parentElement.classList.add('completed');
+                    }
+                    
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            localStorage.setItem(questId, 'completed');
+                            this.parentElement.classList.add('completed');
+                        } else {
+                            localStorage.removeItem(questId);
+                            this.parentElement.classList.remove('completed');
+                        }
+                        updateStats();
                     });
-                }
-            });
-        }
-        
-        function toggleQuestCompletion(questId, completed) {
-            const userId = 'anonymous'; // Здесь можно добавить систему авторизации
-            if (completed) {
-                database.ref(`userQuests/${questId}/completedBy/${userId}`).set(true);
-            } else {
-                database.ref(`userQuests/${questId}/completedBy/${userId}`).remove();
+                });
             }
-        }
-        
-        window.deleteUserQuest = function(questId) {
-            if (confirm('Удалить это задание?')) {
-                database.ref('userQuests/' + questId).remove();
+            
+            function updateStats() {
+                const completed = document.querySelectorAll('.quest-checkbox:checked').length;
+                completedCount.textContent = completed;
+                progressBar.value = (completed / checkboxes.length) * 100;
             }
-        };
-        
-        function resetDailyQuests() {
-            // Логика сброса ежедневных квестов
-        }
-        
-        function searchQuests() {
-            const searchTerm = this.value.toLowerCase();
-            document.querySelectorAll('.quest').forEach(quest => {
-                const questText = quest.textContent.toLowerCase();
-                quest.style.display = questText.includes(searchTerm) ? 'flex' : 'none';
-            });
-        }
-        
-        function updateStats() {
-            // Логика обновления статистики
-        }
+            
+            function setupSearch() {
+                const searchInput = document.getElementById('quest-search');
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const quests = document.querySelectorAll('.quest');
+                    
+                    quests.forEach(quest => {
+                        const questText = quest.textContent.toLowerCase();
+                        if (questText.includes(searchTerm)) {
+                            quest.style.display = 'flex';
+                        } else {
+                            quest.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            function setupDailyReset() {
+                resetDailyBtn.addEventListener('click', function() {
+                    dailyCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.parentElement.classList.remove('completed');
+                        localStorage.removeItem(checkbox.id);
+                    });
+                    updateStats();
+                });
+            }
+            
+            loadQuestStates();
+            updateStats();
+            setupSearch();
+            setupDailyReset();
+        });
     </script>
 </body>
 </html>
